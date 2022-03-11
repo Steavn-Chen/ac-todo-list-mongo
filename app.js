@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 const exshbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
+const Todo = require('./models/todo')
+const { render } = require('express/lib/response')
 
 mongoose.connect("mongodb://localhost/todo-list-g", {
   useNewUrlParser: true,
@@ -28,7 +30,11 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.render('index')
+  Todo.find()
+  .lean()
+  .then(todos => res.render('index', { todos }))
+  .catch(error => console.error(error))
+
 })
 
 app.listen(port, (req, res) => {
