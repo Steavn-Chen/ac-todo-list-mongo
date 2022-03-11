@@ -5,7 +5,7 @@ const exshbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
 
-mongoose.connect("mongodb://localhost/todo-list", {
+mongoose.connect("mongodb://localhost/todo-list-g", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
