@@ -1,7 +1,24 @@
 const express = require('express')
+const mongoose = require('mongoose')
+
 const exshbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
+
+mongoose.connect("mongodb://localhost/todo-list", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection
+
+db.on('error', () => {
+  console.log('mongodb error!')
+})
+db.once('open', () => {
+  console.log('mongodb connected!')
+})
+
 const port = 3000
 
 app.engine('hbs', exshbs({ defaultLayout: 'main', extname: 'hbs'}))
