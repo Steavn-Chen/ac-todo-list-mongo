@@ -5,6 +5,8 @@ const exshbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
 const Todo = require('./models/todo')
+const { deleteOne } = require('./models/todo')
+const { redirect } = require('express/lib/response')
 
 
 mongoose.connect("mongodb://localhost/todo-list-g", {
@@ -70,7 +72,8 @@ app.post("/todos/:todo_id/edit", (req, res) => {
   const body = req.body;
   // return Todo.updateOne({ _id: id }, { $set: { ...body }})
   return Todo.updateOne({ _id: id }, { $set: { name: body.name }})
-  .catch(err => console.log(err))
+    .then(() => res.redirect(`/todos/${id}/edit`))
+    .catch(err => console.log(err))
   // return Todo.findById(id)
   //   .then((todo) => {
   //     todo.name = body.name
@@ -79,6 +82,18 @@ app.post("/todos/:todo_id/edit", (req, res) => {
   //   .then(() => res.redirect(`/todos/${id}/edit`))
   //   .catch((error) => console.error(error));
 });
+app.post('/todos/:todo_id/delete', (req, res) => {
+  const _id = req.params.todo_id
+  // return Todo.deleteOne({_id: _id})
+  //   .then(() => res.redirect('/'))
+  //   .catch(err => console.log(err))
+  return Todo.findById(_id)
+  .then(todo => {
+    todo.remove()
+  })
+  .then(() => res.redirect('/'))
+  .catch(err => console.error(err))
+})
 
 app.listen(port, (req, res) => {
   console.log(`The web is running http://localhost/${port}`)
