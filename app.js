@@ -58,6 +58,27 @@ app.get('/todos/:todo_id', (req, res) => {
     .catch((error) => console.error(error));
 })
 
+app.get("/todos/:todo_id/edit", (req, res) => {
+  const id = req.params.todo_id;
+  return Todo.findById(id)
+    .lean()
+    .then((todo) => res.render("edit", { todo }))
+    .catch((error) => console.error(error));
+});
+app.post("/todos/:todo_id/edit", (req, res) => {
+  const id = req.params.todo_id;
+  const body = req.body;
+  // return Todo.updateOne({ _id: id }, { $set: { ...body }})
+  return Todo.updateOne({ _id: id }, { $set: { name: body.name }})
+  .catch(err => console.log(err))
+  // return Todo.findById(id)
+  //   .then((todo) => {
+  //     todo.name = body.name
+  //     return todo.save()
+  //   })
+  //   .then(() => res.redirect(`/todos/${id}/edit`))
+  //   .catch((error) => console.error(error));
+});
 
 app.listen(port, (req, res) => {
   console.log(`The web is running http://localhost/${port}`)
