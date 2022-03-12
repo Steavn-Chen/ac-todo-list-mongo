@@ -5,7 +5,7 @@ const exshbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
 const Todo = require('./models/todo')
-const { render } = require('express/lib/response')
+
 
 mongoose.connect("mongodb://localhost/todo-list-g", {
   useNewUrlParser: true,
@@ -36,6 +36,20 @@ app.get('/', (req, res) => {
   .catch(error => console.error(error))
 
 })
+app.get('/todos/new', (req, res) => {
+  res.render('new')
+})
+
+app.post('/todos', (req, res) => {
+  const body = req.body
+  console.log(body)
+  return Todo.create({
+    name: body.name
+  })
+  .then(() => res.redirect('/'))
+  .catch(error => console.error(error))
+})
+
 
 app.listen(port, (req, res) => {
   console.log(`The web is running http://localhost/${port}`)
