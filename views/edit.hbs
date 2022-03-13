@@ -1,4 +1,5 @@
 <form action="/todos/{{todo._id}}/edit" method="post">
+<input type="checkbox" name="isDone"{{#if todo.isDone}} checked {{/if}}>
 <input type="text" name="name" id="" value="{{todo.name}}">
 <button type="submit" class="btn btn-success">save</button>
 <button type="reset" class="btn btn-danger">reset</button>

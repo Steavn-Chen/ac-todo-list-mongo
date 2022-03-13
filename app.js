@@ -69,14 +69,15 @@ app.get("/todos/:todo_id/edit", (req, res) => {
 });
 app.post("/todos/:todo_id/edit", (req, res) => {
   const id = req.params.todo_id;
-  const body = req.body;
-  // return Todo.updateOne({ _id: id }, { $set: { ...body }})
-  return Todo.updateOne({ _id: id }, { $set: { name: body.name }})
+  const { name, isDone } = req.body
+  return Todo.updateOne({ _id: id }, { $set: { name, isDone: (isDone === 'on')}})
     .then(() => res.redirect(`/todos/${id}/edit`))
     .catch(err => console.log(err))
+
   // return Todo.findById(id)
   //   .then((todo) => {
-  //     todo.name = body.name
+  //     todo.name = name
+  //     todo.isDone = isDone === 'on'
   //     return todo.save()
   //   })
   //   .then(() => res.redirect(`/todos/${id}/edit`))
