@@ -1,13 +1,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
-
 const exshbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 const app = express()
 const Todo = require('./models/todo')
-const { deleteOne } = require('./models/todo')
-const { redirect } = require('express/lib/response')
-
 
 mongoose.connect("mongodb://localhost/todo-list-g", {
   useNewUrlParser: true,
@@ -30,6 +27,7 @@ app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'))
 
 app.get('/', (req, res) => {
   Todo.find()
@@ -68,7 +66,7 @@ app.get("/todos/:todo_id/edit", (req, res) => {
     .then((todo) => res.render("edit", { todo }))
     .catch((error) => console.error(error));
 });
-app.post("/todos/:todo_id/edit", (req, res) => {
+app.put("/todos/:todo_id", (req, res) => {
   const id = req.params.todo_id;
   const { name, isDone } = req.body
   return Todo.updateOne({ _id: id }, { $set: { name, isDone: (isDone === 'on')}})
@@ -84,7 +82,7 @@ app.post("/todos/:todo_id/edit", (req, res) => {
   //   .then(() => res.redirect(`/todos/${id}/edit`))
   //   .catch((error) => console.error(error));
 });
-app.post('/todos/:todo_id/delete', (req, res) => {
+app.delete('/todos/:todo_id', (req, res) => {
   const _id = req.params.todo_id
   // return Todo.deleteOne({_id: _id})
   //   .then(() => res.redirect('/'))
