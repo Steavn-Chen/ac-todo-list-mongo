@@ -20,5 +20,5 @@ app.use(methodOverride('_method'))
 app.use(router)
 
 app.listen(PORT, (req, res) => {
-  console.log(`The web is running http://localhost/${port}`);
+  console.log(`The web is running http://localhost/${PORT}`);
 });
