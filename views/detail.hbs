@@ -1,6 +1,13 @@
-<p><input type="checkbox" name="isDone" {{#if todo.isDone}} checked {{/if}} disabled>{{todo.name}}</p>
-<a href="/">back</a>
-<a href="/todos/{{todo._id}}/edit">edit</a>
-<form action="/todos/{{todo._id}}/?_method=DELETE" method="POST" style="display:inline">
-  <button type="submit" class="btn btn-danger">delete</button>
+<form action="/todos/{{todo._id}}/?_method=DELETE" method="POST">
+  <div class="input-group ">
+    <div class="input-group-text">
+      <input class="form-check-input me-1" type="checkbox" name="isDone" {{#if todo.isDone}} checked {{/if}} disabled> 
+    </div>
+    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="{{todo.name}}"
+      name="name" placeholder="name" disabled>
+    <a href="/" class="btn btn-warning">back</a>
+    <a href="/todos/{{todo._id}}/edit" class="btn btn-success">edit</a>
+    <button type="submit" class="btn btn-danger">delete</button>
+  </div>
 </form>
+
