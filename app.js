@@ -8,22 +8,7 @@ require('./config/mongoose.js')
 
 const router = require('./routes')
 const app = express()
-
-// mongoose.connect("mongodb://localhost/todo-list-g", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-// const db = mongoose.connection
-
-// db.on('error', () => {
-//   console.log('mongodb error!')
-// })
-// db.once('open', () => {
-//   console.log('mongodb connected!')
-// })
-
-const port = 3000
+const PORT = process.env.PORT || 3000
 
 app.engine('hbs', exshbs({ defaultLayout: 'main', extname: 'hbs'}))
 app.set('view engine', 'hbs')
@@ -34,6 +19,6 @@ app.use(methodOverride('_method'))
 
 app.use(router)
 
-app.listen(port, (req, res) => {
-  console.log(`The web is running http://localhost/${port}`)
-})
+app.listen(PORT, (req, res) => {
+  console.log(`The web is running http://localhost/${port}`);
+});
