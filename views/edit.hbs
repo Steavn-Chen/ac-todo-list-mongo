@@ -1,7 +1,12 @@
-<form action="/todos/{{todo._id}}/?_method=PUT" method="post">
-<input type="checkbox" name="isDone"{{#if todo.isDone}} checked {{/if}}>
-<input type="text" name="name" id="" value="{{todo.name}}">
-<button type="submit" class="btn btn-success">save</button>
-<button type="reset" class="btn btn-danger">reset</button>
+<form action="/todos/{{todo._id}}/?_method=PUT" method="POST">
+  <div class="input-group ">
+    <div class="input-group-text">
+      <input class="form-check-input me-1" type="checkbox" name="isDone" {{#if todo.isDone}} checked {{/if}} > 
+    </div>
+    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="{{todo.name}}"
+      name="name" placeholder="name" >
+    <button type="reset" class="btn btn-warning">reset</button>
+    <button type="submit" class="btn btn-primary">submit</button>
+    <a href="/" class="btn btn-info">back</a>
+  </div>
 </form>
-<a href="/">back</a>
