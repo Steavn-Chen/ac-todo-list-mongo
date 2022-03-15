@@ -18,7 +18,6 @@ router.post("/", (req, res) => {
 
 router.get("/:todo_id", (req, res) => {
   const id = req.params.todo_id;
-  console.log(id)
   return Todo.findById(id)
     .lean()
     .then((todo) => res.render("detail", { todo }))

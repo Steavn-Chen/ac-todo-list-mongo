@@ -1,4 +1,4 @@
-<a href="/todos/new">Create</a>
+{{!-- <a href="/todos/new">Create</a>
 <ul>
   {{#each todos}}
   <li>
@@ -7,9 +7,30 @@
     <a href="/todos/{{this._id}}">detail</a>
     <a href="/todos/{{this._id}}/edit">edit</a>
     <form action="/todos/{{this._id}}/?_method=DELETE" method="POST" style="display:inline-block">
-    <button type="submit" class="btn btn-danger">delete</button>
+      <button type="submit" class="btn btn-danger">delete</button>
     </form>
-    {{!-- <a href="/todos/{{this._id}}/delete">delete</a> --}}
+  </li>
+  {{/each}}
+</ul> --}}
+
+<ul class="list-group">
+  {{#each todos}}
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col mr-auto">
+        <input style="vertical-align: middle;" type="checkbox" name="isDone" {{#if this.isDone}} checked {{/if}} disabled>
+        <h4 style="display: inline; vertical-align:middle ">
+        {{this.name}}
+        </h4>
+      </div>
+      <div class="col-auto">
+        <a href="/todos/{{this._id}}" class="btn btn-secondary">detail</a>
+        <a href="/todos/{{this._id}}/edit" class="btn btn-success">edit</a>
+        <form action="/todos/{{this._id}}/?_method=DELETE" method="POST" style="display:inline-block">
+          <button type="submit" class="btn btn-danger">delete</button>
+        </form>
+      </div>
+    </div>
   </li>
   {{/each}}
 </ul>
