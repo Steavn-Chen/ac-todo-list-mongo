@@ -8,10 +8,8 @@ router.get("/new", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const body = req.body;
-  return Todo.create({
-    name: body.name,
-  })
+  const data = String(req.body.name).split(',').map( i => ({ name: i}))
+  return Todo.insertMany(data )
     .then(() => res.redirect("/"))
     .catch((error) => console.error(error));
 });
