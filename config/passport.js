@@ -5,19 +5,20 @@ const User = require('../models/user.js')
 module.exports = app => {
   app.use(passport.initialize())
   app.use(passport.session())
-
   passport.use(new LocalStrategy({ 
     usernameField: 'email',
-    passwordField: 'password' 
-  }, (email, password, done) => {
+    passwordField: 'password',
+    passReqToCallback: true
+  }, (req, email, password, done) => {
+    // console.log(email , password)
   User
     .findOne({ email: email })
     .then((user) => {
       if (!user) {
-        return done(null, false, { message: 'That email is not registered !'})
+        return done(null, false, { message: '這個 Email 還未被註冊 !'})
       }
       if (user.password !== password) {
-        return done(null, false, { message: 'Email or Password incorrect.'})
+        return done(null, false, { message: 'Email 或 Password 錯誤.'})
       }
       return done(null, user)
     })
