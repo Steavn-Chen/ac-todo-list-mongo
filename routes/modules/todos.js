@@ -23,7 +23,7 @@ router.get("/:todo_id", (req, res) => {
 });
 
 router.get("/:todo_id/edit", (req, res) => {
-  const id = req.params.todo_id;
+  const id = req.params.todo_id
   return Todo.findById(id)
     .lean()
     .then((todo) => res.render("edit", { todo }))
