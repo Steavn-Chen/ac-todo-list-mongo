@@ -3,10 +3,11 @@ const exshbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
+const routes = require('./routes')
 
+const usePassport = require('./config/passport.js')
 require('./config/mongoose.js')
 
-const router = require('./routes')
 const app = express()
 const PORT = process.env.PORT || 3000
 
@@ -22,7 +23,8 @@ app.use(session({
   saveUninitialized: true
 }))
 
-app.use(router)
+usePassport(app)
+app.use(routes)
 
 app.listen(PORT, (req, res) => {
   console.log(`The web is running http://localhost/${PORT}`);
