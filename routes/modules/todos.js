@@ -43,21 +43,9 @@ router.put('/:todo_id', (req, res) => {
   )
     .then(() => res.redirect(`/todos/${id}/edit`))
     .catch((err) => console.log(err))
-
-  // return Todo.findById(id)
-  //   .then((todo) => {
-  //     todo.name = name
-  //     todo.isDone = isDone === 'on'
-  //     return todo.save()
-  //   })
-  //   .then(() => res.redirect(`/${id}/edit`))
-  //   .catch((error) => console.error(error));
 })
 
 router.delete('/:todo_id', (req, res) => {
-  // return Todo.deleteOne({_id: _id})
-  //   .then(() => res.redirect('/'))
-  //   .catch(err => console.log(err))
   const _id = req.params.todo_id
   const userId = req.user._id
   return Todo.findOne({ _id, userId })
