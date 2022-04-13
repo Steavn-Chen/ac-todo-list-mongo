@@ -19,10 +19,10 @@ router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
   const errors = []
   if (!name || !email || !password || !confirmPassword) {
-    errors.push({ message: '所有欄位都是必填的。'})
+    errors.push({ message: '所有欄位都是必填的。' })
   }
   if (password !== confirmPassword) {
-    errors.push({ message: '密碼與確認密碼不相符 !'})
+    errors.push({ message: '密碼與確認密碼不相符 !' })
   }
   if (errors.length) {
     return res.render('register', {
@@ -34,41 +34,41 @@ router.post('/register', (req, res) => {
     })
   }
   User.findOne({ email })
-  .then(user => {
-    if (user) {
-      errors.push({ message: '這個 Email 己經被註冊 !' })
-      res.render('register', {
-        name,
-        email,
-        password,
-        confirmPassword,
-        errors
-      })
-    } 
-    return bcrypt
-      .genSalt(10)
-      .then(salt => bcrypt.hash(password, salt))
-      .then(hash => {
-        // return User.create({
-        //   name,
-        //   email,
-        //   password,
-        // })
-        const newUser = new User({
+    .then(user => {
+      if (user) {
+        errors.push({ message: '這個 Email 己經被註冊 !' })
+        res.render('register', {
           name,
           email,
-          password: hash
+          password,
+          confirmPassword,
+          errors
         })
-        newUser.save()
-        .then(() => { 
-          req.flash('success_msg', '註冊成功。')
-          res.redirect('login')
+      }
+      return bcrypt
+        .genSalt(10)
+        .then(salt => bcrypt.hash(password, salt))
+        .then(hash => {
+          // return User.create({
+          //   name,
+          //   email,
+          //   password,
+          // })
+          const newUser = new User({
+            name,
+            email,
+            password: hash
+          })
+          newUser.save()
+            .then(() => {
+              req.flash('success_msg', '註冊成功。')
+              res.redirect('login')
+            })
+            .catch(err => console.log(err))
         })
-        .catch(err => console.log(err))
-      })
-      .catch((err) => console.log(err))
-  })
-  .catch(err => console.log(err))
+        .catch((err) => console.log(err))
+    })
+    .catch(err => console.log(err))
 })
 router.get('/logout', (req, res) => {
   req.flash('success_msg', '成功登出。')

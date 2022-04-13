@@ -7,7 +7,7 @@ const auth = require('./modules/auth.js')
 
 const { authenticated } = require('../middleware/auth.js')
 
-router.use('/auth' ,auth)
+router.use('/auth', auth)
 router.use('/todos', authenticated, todos)
 router.use('/users', users)
 router.use('/', authenticated, home)

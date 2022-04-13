@@ -13,19 +13,19 @@ const usePassport = require('./config/passport.js')
 require('./config/mongoose.js')
 
 const app = express()
-const PORT = process.env.PORT 
+const PORT = process.env.PORT
 
-app.engine('hbs', exshbs({ defaultLayout: 'main', extname: 'hbs'}))
+app.engine('hbs', exshbs({ defaultLayout: 'main', extname: 'hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: true
   })
 )
 app.use(flash())
