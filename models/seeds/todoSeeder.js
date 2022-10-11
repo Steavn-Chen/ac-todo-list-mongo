@@ -8,11 +8,6 @@ require('../../config/mongoose.js')
 
 const db = require('../../config/mongoose.js')
 
-// const SEED_USER = {
-//   name: 'root',
-//   email: 'root@example.com',
-//   password: '12345678'
-// }
 const SEED = [
   {
     name: 'root',

@@ -9,7 +9,7 @@ router.get('/new', (req, res) => {
 
 router.post('/', (req, res) => {
   const userId = req.user._id
-  const data = String(req.body.name).split(',').map(i => ({ name: i, userId: userId }))
+  const data = String(req.body.name).split(',').map(i => ({ name: i, userId }))
   return Todo.insertMany(data)
     .then(() => res.redirect('/'))
     .catch((error) => console.error(error))
@@ -38,7 +38,7 @@ router.put('/:todo_id', (req, res) => {
   const userId = req.user._id
   const { name, isDone } = req.body
   return Todo.updateOne(
-    { _id: id, userId: userId },
+    { _id: id, userId },
     { $set: { name, isDone: isDone === 'on' } }
   )
     .then(() => res.redirect(`/todos/${id}/edit`))
